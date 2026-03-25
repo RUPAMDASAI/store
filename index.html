@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rupam's Beauty Store – Coochbehar, WB</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --rose:   #e85d82;
+    --rose-d: #c9456a;
+    --gold:   #d4a853;
+    --cream:  #fdf6ef;
+    --blush:  #fce8f0;
+    --text:   #2a1a23;
+    --muted:  #8a6878;
+    --white:  #ffffff;
+    --shadow: 0 4px 24px rgba(232,93,130,0.13);
+    --radius: 18px;
+    --trans:  0.25s cubic-bezier(.4,0,.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+  /* ── HEADER ───────────────────────────── */
+  header{
+    background:linear-gradient(135deg,#2a1a23 0%,#4a1e35 50%,#2a1a23 100%);
+    padding:0;position:sticky;top:0;z-index:100;
+    box-shadow:0 2px 20px rgba(0,0,0,.35);
+  }
+  .header-inner{
+    max-width:1200px;margin:0 auto;padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .brand{display:flex;flex-direction:column;gap:2px}
+  .brand-name{
+    font-family:'Playfair Display',serif;font-size:clamp(1.3rem,4vw,1.9rem);
+    color:var(--white);letter-spacing:.02em;line-height:1.1;
+  }
+  .brand-name span{color:var(--gold)}
+  .brand-tag{font-size:.72rem;color:#f9c9da;font-style:italic;letter-spacing:.04em;max-width:260px;line-height:1.3}
+  .header-right{display:flex;align-items:center;gap:10px}
+  .wa-btn{
+    display:flex;align-items:center;gap:6px;background:#25d366;color:#fff;
+    border:none;border-radius:50px;padding:8px 14px;font-size:.78rem;font-weight:600;
+    cursor:pointer;text-decoration:none;white-space:nowrap;transition:var(--trans);
+  }
+  .wa-btn:hover{background:#1fb355;transform:translateY(-1px)}
+  .wa-btn svg{flex-shrink:0}
+
+  /* ── HERO BANNER ──────────────────────── */
+  .hero{
+    background:linear-gradient(135deg,#fce8f0 0%,#fff5ea 100%);
+    padding:36px 20px 28px;text-align:center;
+    border-bottom:1px solid #f0d8e8;
+  }
+  .hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5vw,2.4rem);color:var(--text);line-height:1.2}
+  .hero h2 em{color:var(--rose);font-style:normal}
+  .hero p{margin-top:8px;color:var(--muted);font-size:.9rem;max-width:500px;margin-left:auto;margin-right:auto}
+  .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+  .badge{background:var(--white);border:1px solid #f0c8d8;border-radius:50px;padding:5px 14px;font-size:.75rem;color:var(--rose-d);font-weight:500}
+
+  /* ── CATEGORY FILTER ──────────────────── */
+  .filter-bar{
+    position:sticky;top:60px;z-index:90;background:var(--cream);
+    padding:12px 20px;border-bottom:1px solid #f0d8e8;
+    display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+  }
+  .filter-bar::-webkit-scrollbar{display:none}
+  .filter-btn{
+    flex-shrink:0;background:var(--white);border:2px solid #e8cdd8;
+    border-radius:50px;padding:7px 18px;font-size:.8rem;font-weight:500;
+    color:var(--muted);cursor:pointer;transition:var(--trans);white-space:nowrap;
+  }
+  .filter-btn.active,.filter-btn:hover{
+    background:var(--rose);border-color:var(--rose);color:#fff;
+    transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,93,130,.3);
+  }
+
+  /* ── MAIN ─────────────────────────────── */
+  main{max-width:1200px;margin:0 auto;padding:24px 16px 120px}
+  .section-label{
+    font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text);
+    margin:28px 0 16px;display:flex;align-items:center;gap:10px;
+  }
+  .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,#e8cdd8,transparent)}
+
+  /* ── PRODUCT GRID ─────────────────────── */
+  .product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:16px;
+  }
+  @media(min-width:500px){.product-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}
+  @media(min-width:768px){.product-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}}
+
+  .card{
+    background:var(--white);border-radius:var(--radius);overflow:hidden;
+    box-shadow:0 2px 12px rgba(42,26,35,.07);
+    transition:var(--trans);display:flex;flex-direction:column;
+    animation:fadeUp .45s ease both;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  .card-img{position:relative;overflow:hidden;background:#f9f0f4;aspect-ratio:1/1}
+  .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .card:hover .card-img img{transform:scale(1.06)}
+  .cat-tag{
+    position:absolute;top:8px;left:8px;background:var(--rose);color:#fff;
+    font-size:.6rem;font-weight:600;padding:3px 9px;border-radius:50px;
+    letter-spacing:.06em;text-transform:uppercase;
+  }
+
+  .card-body{padding:12px 14px 14px;flex:1;display:flex;flex-direction:column;gap:4px}
+  .card-name{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.3}
+  .card-desc{font-size:.72rem;color:var(--muted);line-height:1.4;flex:1}
+  .card-price{font-size:1rem;font-weight:700;color:var(--rose-d);margin-top:6px}
+
+  .add-btn{
+    margin-top:10px;background:linear-gradient(135deg,var(--rose),var(--rose-d));
+    color:#fff;border:none;border-radius:10px;padding:9px;
+    font-size:.8rem;font-weight:600;cursor:pointer;
+    transition:var(--trans);display:flex;align-items:center;justify-content:center;gap:6px;
+  }
+  .add-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .add-btn.added{background:linear-gradient(135deg,#34a853,#2d9146)}
+  .add-btn.added::before{content:'✓ '}
+
+  /* ── CART BUBBLE ──────────────────────── */
+  #cart-bubble{
+    position:fixed;bottom:24px;right:20px;z-index:200;
+    background:linear-gradient(135deg,var(--rose),var(--rose-d));
+    color:#fff;border:none;border-radius:50px;padding:14px 20px;
+    font-size:.9rem;font-weight:700;cursor:pointer;
+    box-shadow:0 6px 24px rgba(232,93,130,.45);
+    display:flex;align-items:center;gap:8px;
+    transition:var(--trans);
+  }
+  #cart-bubble:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 30px rgba(232,93,130,.55)}
+  #cart-count{
+    background:#fff;color:var(--rose-d);border-radius:50%;
+    width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+    font-size:.75rem;font-weight:800;
+  }
+  #cart-bubble.wiggle{animation:wiggle .4s ease}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+
+  /* ── CART MODAL ───────────────────────── */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(42,26,35,.6);z-index:300;
+    display:flex;align-items:flex-end;justify-content:center;
+    opacity:0;pointer-events:none;transition:.3s ease;
+  }
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{
+    background:var(--white);width:100%;max-width:560px;max-height:90vh;
+    border-radius:24px 24px 0 0;overflow:hidden;display:flex;flex-direction:column;
+    transform:translateY(100%);transition:.35s cubic-bezier(.4,0,.2,1);
+  }
+  .modal-overlay.open .modal{transform:none}
+  .modal-header{
+    padding:18px 20px 14px;display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid #f0d8e8;flex-shrink:0;
+  }
+  .modal-header h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text)}
+  .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1;padding:4px}
+  .modal-body{overflow-y:auto;flex:1;padding:16px 20px}
+  .modal-footer{padding:16px 20px;border-top:1px solid #f0d8e8;flex-shrink:0;background:var(--white)}
+
+  .cart-empty{text-align:center;padding:40px 20px;color:var(--muted)}
+  .cart-empty .emoji{font-size:3rem;margin-bottom:10px}
+
+  .cart-item{
+    display:flex;align-items:center;gap:12px;padding:12px 0;
+    border-bottom:1px solid #f8eef4;
+  }
+  .cart-item-img{width:54px;height:54px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#f9f0f4}
+  .cart-item-info{flex:1;min-width:0}
+  .cart-item-name{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.3}
+  .cart-item-price{font-size:.78rem;color:var(--muted);margin-top:2px}
+  .cart-item-sub{font-size:.8rem;font-weight:700;color:var(--rose-d);margin-top:2px}
+  .qty-ctrl{display:flex;align-items:center;gap:6px;margin-top:6px}
+  .qty-btn{
+    background:var(--blush);border:none;border-radius:6px;
+    width:26px;height:26px;font-size:.9rem;font-weight:700;
+    cursor:pointer;transition:var(--trans);color:var(--rose-d);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qty-btn:hover{background:var(--rose);color:#fff}
+  .qty-num{font-size:.85rem;font-weight:600;min-width:20px;text-align:center}
+  .remove-btn{background:none;border:none;color:#cba;cursor:pointer;font-size:.75rem;margin-left:auto;transition:var(--trans);flex-shrink:0;padding:4px}
+  .remove-btn:hover{color:#e85d82}
+
+  .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .cart-total span{font-size:1rem;font-weight:700;color:var(--text)}
+  .cart-total strong{font-size:1.2rem;color:var(--rose-d);font-family:'Playfair Display',serif}
+
+  .checkout-btn{
+    width:100%;background:linear-gradient(135deg,var(--rose),var(--rose-d));
+    color:#fff;border:none;border-radius:14px;padding:14px;
+    font-size:.95rem;font-weight:700;cursor:pointer;transition:var(--trans);
+  }
+  .checkout-btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+
+  /* ── ORDER FORM MODAL ─────────────────── */
+  #order-modal .modal-body{padding:20px}
+  .form-group{margin-bottom:16px}
+  .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:6px}
+  .form-group input,.form-group textarea{
+    width:100%;border:2px solid #e8cdd8;border-radius:10px;padding:10px 14px;
+    font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);
+    background:var(--cream);transition:var(--trans);outline:none;
+  }
+  .form-group input:focus,.form-group textarea:focus{border-color:var(--rose);background:var(--white)}
+  .form-group textarea{resize:vertical;min-height:72px}
+  .order-summary-box{
+    background:var(--blush);border-radius:12px;padding:12px 14px;margin-bottom:16px;
+    font-size:.78rem;color:var(--text);line-height:1.7;
+  }
+  .order-summary-box strong{color:var(--rose-d)}
+  .submit-btn{
+    width:100%;background:linear-gradient(135deg,var(--rose),var(--rose-d));
+    color:#fff;border:none;border-radius:14px;padding:14px;
+    font-size:.95rem;font-weight:700;cursor:pointer;transition:var(--trans);
+  }
+  .submit-btn:hover{filter:brightness(1.07)}
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;filter:none}
+
+  /* ── SUCCESS SCREEN ───────────────────── */
+  #success-modal .modal-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 24px;gap:14px}
+  .success-icon{font-size:3.5rem}
+  #success-modal h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--text)}
+  #success-modal p{font-size:.88rem;color:var(--muted);line-height:1.6}
+  #success-modal .wa-link{
+    display:flex;align-items:center;gap:8px;background:#25d366;color:#fff;
+    border-radius:50px;padding:12px 24px;font-weight:600;font-size:.9rem;
+    text-decoration:none;margin-top:8px;transition:var(--trans);
+  }
+  #success-modal .wa-link:hover{background:#1fb355}
+
+  /* ── FOOTER ───────────────────────────── */
+  footer{
+    background:linear-gradient(135deg,#2a1a23,#4a1e35);
+    color:#f9c9da;padding:24px 20px;text-align:center;font-size:.78rem;
+  }
+  footer strong{color:var(--gold);font-family:'Playfair Display',serif;font-size:.95rem}
+  footer a{color:#f9c9da;text-decoration:none}
+  footer a:hover{color:var(--gold)}
+
+  /* ── WHATSAPP FLOAT ───────────────────── */
+  #wa-float{
+    position:fixed;bottom:24px;left:20px;z-index:200;
+    background:#25d366;color:#fff;border-radius:50%;
+    width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 20px rgba(37,211,102,.45);text-decoration:none;
+    transition:var(--trans);
+  }
+  #wa-float:hover{transform:scale(1.1)}
+
+  /* ── NO RESULTS ───────────────────────── */
+  .no-results{grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)}
+  .hidden{display:none!important}
+
+  @media(max-width:400px){
+    .filter-btn{padding:6px 13px;font-size:.75rem}
+    .card-name{font-size:.8rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- WHATSAPP FLOAT -->
+<a id="wa-float" href="https://wa.me/918822577488" target="_blank" aria-label="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-name">Rupam's <span>Beauty</span> Store</div>
+      <div class="brand-tag">"The glow is real! ✨ Cannot stop touching my skin, it feels so soft."</div>
+    </div>
+    <div class="header-right">
+      <a class="wa-btn" href="https://wa.me/918822577488" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h2>Beauty &amp; Glow, <em>Delivered to You</em></h2>
+  <p>Skincare • Makeup • Haircare • Fragrance — curated picks at great prices, right from Coochbehar, WB 💖</p>
+  <div class="hero-badges">
+    <span class="badge">📦 Order via WhatsApp</span>
+    <span class="badge">🏠 Home Delivery</span>
+    <span class="badge">📞 8822577488</span>
+    <span class="badge">📍 Coochbehar, WB</span>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-cat="all">All Products</button>
+  <button class="filter-btn" data-cat="Skincare">✨ Skincare</button>
+  <button class="filter-btn" data-cat="Makeup">💄 Makeup</button>
+  <button class="filter-btn" data-cat="Haircare">💆 Haircare</button>
+  <button class="filter-btn" data-cat="Fragrance">🌸 Fragrance</button>
+</div>
+
+<!-- PRODUCTS -->
+<main id="main-content">
+  <div id="product-container"></div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div><strong>Rupam's Beauty Store</strong></div>
+  <div style="margin-top:6px">📍 Coochbehar, WB &nbsp;|&nbsp; 📞 <a href="tel:8822577488">8822577488</a> &nbsp;|&nbsp; ✉ <a href="mailto:rupamai0007@mail.com">rupamai0007@mail.com</a></div>
+  <div style="margin-top:8px;color:#c9a0b5;font-size:.7rem">© 2025 Rupam's Beauty Store. All orders are confirmed via WhatsApp.</div>
+</footer>
+
+<!-- CART BUBBLE -->
+<button id="cart-bubble" onclick="openModal('cart-modal')" aria-label="Open Cart">
+  🛒 Cart <span id="cart-count">0</span>
+</button>
+
+<!-- CART MODAL -->
+<div class="modal-overlay" id="cart-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🛒 Your Cart</h3>
+      <button class="close-btn" onclick="closeModal('cart-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="cart-items"></div>
+    <div class="modal-footer">
+      <div class="cart-total">
+        <span>Grand Total</span>
+        <strong id="cart-grand-total">₹0</strong>
+      </div>
+      <button class="checkout-btn" id="checkout-btn" onclick="openCheckout()">Place Order →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER FORM MODAL -->
+<div class="modal-overlay" id="order-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📋 Order Details</h3>
+      <button class="close-btn" onclick="closeModal('order-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="order-summary-box" id="order-summary-preview"></div>
+      <form id="order-form" action="https://formspree.io/f/xqegkpyq" method="POST">
+        <!-- Hidden compiled fields -->
+        <input type="hidden" name="_subject" id="email-subject" value="New Order – Rupam's Beauty Store" />
+        <input type="hidden" name="order_summary" id="hidden-order-summary" />
+        <input type="hidden" name="grand_total" id="hidden-grand-total" />
+
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" name="customer_name" placeholder="Your full name" required />
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" name="phone" placeholder="e.g. 9876543210" required pattern="[0-9]{10}" />
+        </div>
+        <div class="form-group">
+          <label>Delivery Address *</label>
+          <textarea name="address" placeholder="House no., Street, Area, Pin code..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Special Instructions (optional)</label>
+          <textarea name="instructions" placeholder="Any colour preference, urgency, etc."></textarea>
+        </div>
+        <button class="submit-btn" type="submit" id="submit-btn">✅ Confirm Order</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Order Placed!</h3>
+      <button class="close-btn" onclick="closeModal('success-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="success-icon">🎉</div>
+      <h3>Thank you for your order!</h3>
+      <p><strong>Rupam's Beauty Store</strong> will contact you on WhatsApp shortly to confirm availability, delivery details, and payment.</p>
+      <p>In the meantime, feel free to chat with us directly:</p>
+      <a class="wa-link" href="https://wa.me/918822577488" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PRODUCTS DATA ────────────────────────────────────────────
+const products = [
+  // SKINCARE (images 1-6)
+  { id:1,  name:"Lakmé Peach Milk Moisturizer (120ml)",      price:210, cat:"Skincare",  img:"https://i.ibb.co/8nmrmxLz/image.jpg",  desc:"Soft, non-greasy formula with peach milk extracts for daily glow." },
+  { id:2,  name:"Nivea Soft Light Moisturizer (200ml)",       price:350, cat:"Skincare",  img:"https://i.ibb.co/rGm2cmVG/image.jpg",  desc:"Light, fast-absorbing cream enriched with Jojoba oil & Vitamin E." },
+  { id:3,  name:"Himalaya Neem Face Wash (150ml)",            price:180, cat:"Skincare",  img:"https://i.ibb.co/0yLHvHrw/image.jpg",  desc:"Purifying herbal face wash that clears acne and controls oil." },
+  { id:4,  name:"Garnier Vitamin C Serum (30ml)",             price:550, cat:"Skincare",  img:"https://i.ibb.co/VcTBzgKM/image.jpg",  desc:"Brightening serum with pure Vitamin C for a radiant complexion." },
+  { id:5,  name:"Mamaearth Sunscreen SPF 50 (80g)",           price:399, cat:"Skincare",  img:"https://i.ibb.co/fVgJKqWT/image.jpg",  desc:"Broad-spectrum SPF 50 with natural ingredients, no white cast." },
+  { id:6,  name:"Pond's Bright Beauty Cream (50g)",           price:220, cat:"Skincare",  img:"https://i.ibb.co/SDRnfQhb/image.jpg",  desc:"Skin-brightening day cream with Vitamin B3 for an even tone." },
+  // MAKEUP (images 7-12)
+  { id:7,  name:"Maybelline Fit Me Foundation (30ml)",        price:599, cat:"Makeup",    img:"https://i.ibb.co/q31Yv1PT/image.jpg",  desc:"Natural finish foundation that matches skin seamlessly all day." },
+  { id:8,  name:"Lakmé Eyeconic Kajal",                       price:199, cat:"Makeup",    img:"https://i.ibb.co/cSV5pJXq/image.jpg",  desc:"Smudge-proof, waterproof kajal for intense black definition." },
+  { id:9,  name:"Swiss Beauty Matte Lipstick",                price:249, cat:"Makeup",    img:"https://i.ibb.co/hx3v8pM5/image.jpg",  desc:"Rich, long-lasting matte colour with a comfortable satin feel." },
+  { id:10, name:"Faces Canada Compact Powder",                price:225, cat:"Makeup",    img:"https://i.ibb.co/ns3DdfJf/image.jpg",  desc:"Lightweight compact that blurs pores and controls shine." },
+  { id:11, name:"Insight Cosmetics Blusher",                  price:180, cat:"Makeup",    img:"https://i.ibb.co/Nn6nHQ42/image.jpg",  desc:"Silky-smooth blusher for a naturally flushed, healthy glow." },
+  { id:12, name:"Blue Heaven Mascara",                        price:150, cat:"Makeup",    img:"https://i.ibb.co/S7QfMHGH/image.jpg",  desc:"Volumising & lengthening mascara for bold, dramatic lashes." },
+  // HAIRCARE (images 13-18)
+  { id:13, name:"Dabur Amla Hair Oil (200ml)",                price:180, cat:"Haircare",  img:"https://i.ibb.co/LyGWYnP/image.jpg",   desc:"Classic amla oil that strengthens hair roots and adds shine." },
+  { id:14, name:"Clinic Plus Shampoo (340ml)",                price:220, cat:"Haircare",  img:"https://i.ibb.co/xt7jgmzP/image.jpg",  desc:"Protein-rich shampoo for strong, silky hair from root to tip." },
+  { id:15, name:"TRESemmé Keratin Smooth Conditioner (190ml)",price:210, cat:"Haircare",  img:"https://i.ibb.co/kVggLjQ1/image.jpg",  desc:"Smooths frizz and leaves hair silky with keratin complex." },
+  { id:16, name:"Indulekha Bringha Oil (100ml)",              price:432, cat:"Haircare",  img:"https://i.ibb.co/6RMz6dcQ/image.jpg",  desc:"Ayurvedic hair oil clinically proven to reduce hairfall." },
+  { id:17, name:"Pantene Hairfall Shampoo (180ml)",           price:165, cat:"Haircare",  img:"https://i.ibb.co/WWKZhdk2/image.jpg",  desc:"Advanced formula shampoo that visibly reduces hair breakage." },
+  { id:18, name:"Mamaearth Onion Hair Mask (200g)",           price:499, cat:"Haircare",  img:"https://i.ibb.co/C3vm79m8/image.jpg",  desc:"Deep conditioning onion mask for stronger, shinier hair." },
+  // FRAGRANCE (images 19-24)
+  { id:19, name:"Fogg Deodorant Spray (150ml)",               price:225, cat:"Fragrance", img:"https://i.ibb.co/fYwGjdX4/image.jpg",  desc:"Long-lasting no gas deo with a fresh, confident fragrance." },
+  { id:20, name:"Engage W2 Perfume Spray (120ml)",            price:199, cat:"Fragrance", img:"https://i.ibb.co/jkZK2zZQ/image.jpg",  desc:"Feminine floral-fruity fragrance for an all-day fresh feel." },
+  { id:21, name:"Wild Stone Ultra Sensual Perfume (100ml)",   price:350, cat:"Fragrance", img:"https://i.ibb.co/HL99Rh0d/image.jpg",  desc:"Bold oriental fragrance that commands attention and desire." },
+  { id:22, name:"Denver Hamilton Perfume (60ml)",             price:280, cat:"Fragrance", img:"https://i.ibb.co/JFqBY6FR/image.jpg",  desc:"Sophisticated musky blend for the modern, confident person." },
+  { id:23, name:"Nivea Fresh Active Roll-On (50ml)",          price:190, cat:"Fragrance", img:"https://i.ibb.co/6RKfXZyS/image.jpg",  desc:"48-hour freshness roll-on with a clean aqua scent." },
+  { id:24, name:"Axe Signature Dark Temptation (122ml)",      price:210, cat:"Fragrance", img:"https://i.ibb.co/vCc0kJXw/image.jpg",  desc:"Irresistibly chocolatey-woody deo that lasts all day long." }
+];
+
+// ── CART STATE ───────────────────────────────────────────────
+let cart = JSON.parse(localStorage.getItem('rbs_cart') || '[]');
+
+function saveCart(){ localStorage.setItem('rbs_cart', JSON.stringify(cart)); }
+
+function getItem(id){ return cart.find(i=>i.id===id); }
+
+function addToCart(id){
+  const p = products.find(p=>p.id===id);
+  if(!p) return;
+  const existing = getItem(id);
+  if(existing){ existing.qty++; }
+  else { cart.push({...p, qty:1}); }
+  saveCart(); updateCartBubble(); flashBubble();
+}
+
+function removeFromCart(id){
+  cart = cart.filter(i=>i.id!==id);
+  saveCart(); updateCartBubble(); renderCartItems();
+}
+
+function changeQty(id, delta){
+  const item = getItem(id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0){ removeFromCart(id); return; }
+  saveCart(); updateCartBubble(); renderCartItems();
+}
+
+function cartTotal(){ return cart.reduce((s,i)=>s+i.price*i.qty,0); }
+function cartCount(){ return cart.reduce((s,i)=>s+i.qty,0); }
+
+function updateCartBubble(){
+  document.getElementById('cart-count').textContent = cartCount();
+}
+
+function flashBubble(){
+  const b = document.getElementById('cart-bubble');
+  b.classList.remove('wiggle');
+  void b.offsetWidth;
+  b.classList.add('wiggle');
+}
+
+// ── RENDER PRODUCTS ──────────────────────────────────────────
+let currentCat = 'all';
+
+function renderProducts(cat){
+  currentCat = cat;
+  const filtered = cat==='all' ? products : products.filter(p=>p.cat===cat);
+  const container = document.getElementById('product-container');
+
+  if(filtered.length===0){
+    container.innerHTML = '<div class="no-results">No products found.</div>';
+    return;
+  }
+
+  // Group by category when showing all
+  let html = '';
+  if(cat==='all'){
+    const cats = ['Skincare','Makeup','Haircare','Fragrance'];
+    const icons = {Skincare:'✨',Makeup:'💄',Haircare:'💆',Fragrance:'🌸'};
+    cats.forEach(c=>{
+      const items = products.filter(p=>p.cat===c);
+      html += `<div class="section-label">${icons[c]} ${c}</div>`;
+      html += `<div class="product-grid">${items.map(cardHTML).join('')}</div>`;
+    });
+  } else {
+    html = `<div class="product-grid">${filtered.map(cardHTML).join('')}</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function cardHTML(p){
+  const delay = (p.id % 8) * 0.05;
+  return `
+  <div class="card" style="animation-delay:${delay}s">
+    <div class="card-img">
+      <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/fce8f0/e85d82?text=Beauty'" />
+      <span class="cat-tag">${p.cat}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${p.name}</div>
+      <div class="card-desc">${p.desc}</div>
+      <div class="card-price">₹${p.price}</div>
+      <button class="add-btn" id="btn-${p.id}" onclick="handleAdd(${p.id})">
+        🛒 Add to Cart
+      </button>
+    </div>
+  </div>`;
+}
+
+function handleAdd(id){
+  addToCart(id);
+  const btn = document.getElementById('btn-'+id);
+  if(btn){
+    btn.classList.add('added');
+    btn.textContent = 'Added!';
+    setTimeout(()=>{
+      btn.classList.remove('added');
+      btn.textContent = '🛒 Add to Cart';
+    }, 1500);
+  }
+}
+
+// ── RENDER CART ──────────────────────────────────────────────
+function renderCartItems(){
+  const container = document.getElementById('cart-items');
+  if(cart.length===0){
+    container.innerHTML = `<div class="cart-empty"><div class="emoji">🛒</div><p>Your cart is empty.<br>Add some beautiful products!</p></div>`;
+    document.getElementById('checkout-btn').disabled = true;
+    document.getElementById('cart-grand-total').textContent = '₹0';
+    return;
+  }
+  document.getElementById('checkout-btn').disabled = false;
+  document.getElementById('cart-grand-total').textContent = '₹'+cartTotal().toLocaleString('en-IN');
+  container.innerHTML = cart.map(item=>`
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/54x54/fce8f0/e85d82?text=♥'" />
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">₹${item.price} each</div>
+        <div class="cart-item-sub">Subtotal: ₹${(item.price*item.qty).toLocaleString('en-IN')}</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <button class="remove-btn" onclick="removeFromCart(${item.id})" title="Remove">🗑</button>
+    </div>
+  `).join('');
+}
+
+// ── MODAL HELPERS ────────────────────────────────────────────
+function openModal(id){
+  if(id==='cart-modal') renderCartItems();
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click', e=>{
+    if(e.target===overlay) closeModal(overlay.id);
+  });
+});
+
+// ── CHECKOUT ────────────────────────────────────────────────
+function openCheckout(){
+  if(cart.length===0) return;
+  closeModal('cart-modal');
+
+  // Build order summary
+  let summary = '=== ORDER SUMMARY ===\n';
+  cart.forEach((item,i)=>{
+    summary += `${i+1}. ${item.name}\n   Qty: ${item.qty} × ₹${item.price} = ₹${item.price*item.qty}\n`;
+  });
+  summary += `\n=== GRAND TOTAL: ₹${cartTotal().toLocaleString('en-IN')} ===\n`;
+  summary += `\nShop: Rupam's Beauty Store, Coochbehar, WB\nPhone: 8822577488`;
+
+  document.getElementById('hidden-order-summary').value = summary;
+  document.getElementById('hidden-grand-total').value = '₹'+cartTotal().toLocaleString('en-IN');
+  document.getElementById('email-subject').value = `New Order – ₹${cartTotal()} – Rupam's Beauty Store`;
+
+  // Preview box
+  let previewHTML = '<strong>🧾 Order Summary:</strong><br>';
+  cart.forEach(item=>{
+    previewHTML += `• ${item.name} × ${item.qty} = ₹${item.price*item.qty}<br>`;
+  });
+  previewHTML += `<br><strong>Total: ₹${cartTotal().toLocaleString('en-IN')}</strong>`;
+  document.getElementById('order-summary-preview').innerHTML = previewHTML;
+
+  openModal('order-modal');
+}
+
+// ── FORM SUBMIT ──────────────────────────────────────────────
+document.getElementById('order-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const formData = new FormData(this);
+    const resp = await fetch(this.action, {
+      method:'POST', body:formData,
+      headers:{'Accept':'application/json'}
+    });
+
+    if(resp.ok){
+      // Clear cart
+      cart = [];
+      saveCart();
+      updateCartBubble();
+
+      closeModal('order-modal');
+      openModal('success-modal');
+      this.reset();
+    } else {
+      const data = await resp.json();
+      alert('Oops! Could not send order. ' + (data.error || 'Please try WhatsApp instead.'));
+    }
+  } catch(err){
+    alert('Network error. Please contact us on WhatsApp: 8822577488');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✅ Confirm Order';
+  }
+});
+
+// ── FILTER BUTTONS ───────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(btn.dataset.cat);
+    document.getElementById('main-content').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+// ── INIT ─────────────────────────────────────────────────────
+renderProducts('all');
+updateCartBubble();
+</script>
+</body>
+</html>
